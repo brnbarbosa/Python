@@ -2,33 +2,42 @@
 
 ## Status
 
-**Last session:** 2026-03-19
+**Last session:** 2026-03-20
 **Current project:** Track 1 — Personal Finance Tracker CLI
 **Current milestone:** Milestone 1 — CSV Foundation
 
 ---
 
-## Last Session Summary
+## Last Session Summary (2026-03-20)
 
-- Set up the project structure and created `PLAN.md` with all 5 milestones
-- Designed the CSV schema (`date`, `type`, `category`, `description`, `amount`) and populated `data/transactions.csv` with real data
-- Discussed and corrected the misconception that `csv` module opens files — it is a parser that wraps `open()`
-- Designed the three-function architecture: `open_csv_file()` → `parsing()` → `display_info()`
-- Wrote first version of `tracker.py` with `open_csv_file()` using `csv.DictReader` and `pathlib`
+- Fixed `str(filename)` in `open_csv_file()` — `open()` accepts `Path` directly
+- Designed and built `parsing()` — aggregates transactions into a nested `dict[str, dict[str, float]]` by type and category, including per-type totals
+- Learned to use `setdefault(key, 0.0)` + `+=` as the correct accumulator pattern
+- Collapsed redundant `if/elif` category branches into a single unified block using `type_normalized` as the dict key
+- Caught and corrected three logic/style issues through iteration: double-counting with non-zero `setdefault`, unconditional assignment via `setdefault`, and unused `enumerate`
 
 ## Next Session
 
-Fix the four issues in `tracker.py` (typo, `str()` conversion, `.parents[0]`, missing return), then write a test file for `open_csv_file()` and move on to implementing `parsing()`.
+Rename `parsing()` to a descriptive name, replace the manual `append` loop in `open_csv_file()` with `list()`, then build the display function that prints the summary cleanly to the terminal — completing Milestone 1.
 
 ---
 
 ## Top Recurring Mistake
 
-**Mistake #2 — Function Returns Nothing Instead of Data** (1 occurrence)
-Data functions must return data. Display functions print. Never mix the two.
+**Mistake #3 — Unnecessary Type Conversion (Path to str)** (2 occurrences)
+`open()` speaks `Path` natively — never convert unless an old library forces you to.
 
 ---
 
 ## Mistakes Log
 
-See `MISTAKES_LOG.MD` for the full log (4 entries).
+See `MISTAKES_LOG.md` for the full log (7 entries).
+
+---
+
+## Session History
+
+| Date       | Milestone                        | Key Concepts                                      |
+|------------|----------------------------------|---------------------------------------------------|
+| 2026-03-19 | Milestone 1 — CSV Foundation     | `csv.DictReader`, `pathlib`, file I/O, list[dict] |
+| 2026-03-20 | Milestone 1 — Aggregation logic  | Nested dicts, `setdefault`, accumulator pattern   |

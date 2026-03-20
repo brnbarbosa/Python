@@ -1,6 +1,6 @@
 # Bruno's Python Mistakes Log
 
-Last updated: 2026-03-19
+Last updated: 2026-03-20
 
 ---
 
@@ -75,8 +75,8 @@ Data functions return data. Display functions print. Never mix the two.
 
 **Category:** Style
 **First seen:** 2026-03-19
-**Last seen:** 2026-03-19
-**Occurrences:** 1
+**Last seen:** 2026-03-20
+**Occurrences:** 2
 
 **Description:**
 Bruno wrapped a `Path` object in `str()` before passing it to `open()`, which is unnecessary — `open()` accepts `Path` objects directly since Python 3.6.
@@ -124,5 +124,91 @@ ROOT = Path(__file__).resolve().parent
 
 **Rule to remember:**
 Use `.parent` for one level up; use `.parents[n]` only when climbing multiple levels.
+
+---
+
+## Mistake #5 — Flat Dict for Nested Data
+
+**Category:** Structure
+**First seen:** 2026-03-20
+**Last seen:** 2026-03-20
+**Occurrences:** 1
+
+**Description:**
+Bruno initially designed the aggregation output as a flat dict mixing type keys and category keys at the same level, losing the relationship between them.
+
+**Example of the mistake:**
+```python
+{"income": 2700.00, "expenses": 2000.00, "salary": 2700.00, "food": 35.00}
+```
+
+**Why it is wrong:**
+You cannot tell which type a category belongs to, making it impossible to display per-type category breakdowns correctly.
+
+**The correct pattern:**
+```python
+{"income": {"salary": 2700.00, "total income": 2700.00}, "expense": {"food": 35.00, "total expense": 35.00}}
+```
+
+**Rule to remember:**
+When data has a parent-child relationship, the structure must reflect that — use nesting, not a flat key dump.
+
+---
+
+## Mistake #6 — `setdefault` With Non-Zero Default Causing Double-Count
+
+**Category:** Logic
+**First seen:** 2026-03-20
+**Last seen:** 2026-03-20
+**Occurrences:** 1
+
+**Description:**
+Bruno used `setdefault(key, float(row["amount"]))` followed by `+= float(row["amount"])`, doubling the value for the first occurrence of a category.
+
+**Example of the mistake:**
+```python
+result["expense"].setdefault(category_normalized, float(row["amount"]))
+result["expense"][category_normalized] += float(row["amount"])
+```
+
+**Why it is wrong:**
+When the key is new, `setdefault` sets it to the amount, then `+=` adds the amount again — first entry is always doubled.
+
+**The correct pattern:**
+```python
+result["expense"].setdefault(category_normalized, 0.0)
+result["expense"][category_normalized] += float(row["amount"])
+```
+
+**Rule to remember:**
+Always `setdefault` to `0` (or empty), then always `+=` — never seed with the value itself.
+
+---
+
+## Mistake #7 — Using `setdefault` for Unconditional Assignment
+
+**Category:** Style
+**First seen:** 2026-03-20
+**Last seen:** 2026-03-20
+**Occurrences:** 1
+
+**Description:**
+Bruno used `setdefault` to write the type totals at the end of the function, but `setdefault` means "set only if missing." The totals should always be overwritten unconditionally.
+
+**Example of the mistake:**
+```python
+result["income"].setdefault("total income", total_income)
+```
+
+**Why it is wrong:**
+`setdefault` is for guaranteeing a key exists with a fallback — not for setting a value you always want to assign.
+
+**The correct pattern:**
+```python
+result["income"]["total income"] = total_income
+```
+
+**Rule to remember:**
+Use `setdefault` when the key might already exist and you want to preserve it. Use `=` when you always want to set it.
 
 ---
