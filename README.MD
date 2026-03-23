@@ -2,23 +2,23 @@
 
 ## Status
 
-**Last session:** 2026-03-20
+**Last session:** 2026-03-23
 **Current project:** Track 1 — Personal Finance Tracker CLI
-**Current milestone:** Milestone 1 — CSV Foundation
+**Current milestone:** Milestone 2 — Adding Transactions
 
 ---
 
-## Last Session Summary (2026-03-20)
+## Last Session Summary (2026-03-23)
 
-- Fixed `str(filename)` in `open_csv_file()` — `open()` accepts `Path` directly
-- Designed and built `parsing()` — aggregates transactions into a nested `dict[str, dict[str, float]]` by type and category, including per-type totals
-- Learned to use `setdefault(key, 0.0)` + `+=` as the correct accumulator pattern
-- Collapsed redundant `if/elif` category branches into a single unified block using `type_normalized` as the dict key
-- Caught and corrected three logic/style issues through iteration: double-counting with non-zero `setdefault`, unconditional assignment via `setdefault`, and unused `enumerate`
+- Built `data_summary()` — formats the parsed dict into a clean, human-readable string using `"\n".join(lines)`
+- Learned why `.join()` must be called on the whole list, not on individual items inside a loop
+- Added ANSI bold formatting to highlight totals in terminal output
+- Milestone 1 exit criteria met: `python tracker.py` prints income, expenses, and per-category breakdown cleanly
+- Started introduction to Milestone 2 — `argparse` and subcommands
 
 ## Next Session
 
-Rename `parsing()` to a descriptive name, replace the manual `append` loop in `open_csv_file()` with `list()`, then build the display function that prints the summary cleanly to the terminal — completing Milestone 1.
+Start Milestone 2: research `argparse` subcommands vs positional/optional arguments, then build `cli.py` with `summary` and `add` subcommands.
 
 ---
 
@@ -31,7 +31,7 @@ Rename `parsing()` to a descriptive name, replace the manual `append` loop in `o
 
 ## Mistakes Log
 
-See `MISTAKES_LOG.md` for the full log (7 entries).
+See `MISTAKES_LOG.md` for the full log (8 entries).
 
 ---
 
@@ -41,3 +41,4 @@ See `MISTAKES_LOG.md` for the full log (7 entries).
 |------------|----------------------------------|---------------------------------------------------|
 | 2026-03-19 | Milestone 1 — CSV Foundation     | `csv.DictReader`, `pathlib`, file I/O, list[dict] |
 | 2026-03-20 | Milestone 1 — Aggregation logic  | Nested dicts, `setdefault`, accumulator pattern   |
+| 2026-03-23 | Milestone 1 — Complete           | `str.join()`, display function, ANSI formatting   |

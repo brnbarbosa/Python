@@ -1,6 +1,6 @@
 # Bruno's Python Mistakes Log
 
-Last updated: 2026-03-20
+Last updated: 2026-03-23
 
 ---
 
@@ -210,5 +210,34 @@ result["income"]["total income"] = total_income
 
 **Rule to remember:**
 Use `setdefault` when the key might already exist and you want to preserve it. Use `=` when you always want to set it.
+
+---
+
+## Mistake #8 — Calling `.join()` on a Single String Instead of a List
+
+**Category:** Concepts
+**First seen:** 2026-03-23
+**Last seen:** 2026-03-23
+**Occurrences:** 1
+
+**Description:**
+Bruno iterated over a list of lines and called `"\n".join(line)` on each individual string, not on the list itself. Since strings are iterable in Python, `.join()` treated each character as an element, producing garbled output.
+
+**Example of the mistake:**
+```python
+for line in lines:
+    summary += "\n".join(line)  # joins characters of one string, not list items
+```
+
+**Why it is wrong:**
+`str.join()` takes an iterable of strings. Passing a single string gives you the characters joined by the separator, not the lines.
+
+**The correct pattern:**
+```python
+summary = "\n".join(lines)  # one call on the whole list
+```
+
+**Rule to remember:**
+Call `.join()` once on the whole list — never inside a loop on a single item.
 
 ---
