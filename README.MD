@@ -2,23 +2,23 @@
 
 ## Status
 
-**Last session:** 2026-03-23
+**Last session:** 2026-03-26
 **Current project:** Track 1 — Personal Finance Tracker CLI
-**Current milestone:** Milestone 2 — Adding Transactions
+**Current milestone:** Milestone 4 — Refactor to Modules + Error Handling (in progress)
 
 ---
 
-## Last Session Summary (2026-03-23)
+## Last Session Summary (2026-03-26)
 
-- Built `data_summary()` — formats the parsed dict into a clean, human-readable string using `"\n".join(lines)`
-- Learned why `.join()` must be called on the whole list, not on individual items inside a loop
-- Added ANSI bold formatting to highlight totals in terminal output
-- Milestone 1 exit criteria met: `python tracker.py` prints income, expenses, and per-category breakdown cleanly
-- Started introduction to Milestone 2 — `argparse` and subcommands
+- Completed Milestone 3: built `reports.py` with `data_summary()`, extracted from `tracker.py`
+- Fixed `parsing()` to only include income/expense sections when data exists (avoids empty sections when filtering)
+- Built `models.py` with `Transaction` dataclass — replaced raw dicts throughout `tracker.py` and `filters.py`
+- Updated all type annotations and dot notation access (`row.category` instead of `row["category"]`)
+- Started Milestone 4: identified error handling scenarios (FileNotFound, invalid amount, invalid args)
 
 ## Next Session
 
-Start Milestone 2: research `argparse` subcommands vs positional/optional arguments, then build `cli.py` with `summary` and `add` subcommands.
+Continue Milestone 4: implement `try/except` error handling in `open_csv_file()` for `FileNotFoundError`, then handle invalid amount input in `add_transaction()`.
 
 ---
 
@@ -42,3 +42,5 @@ See `MISTAKES_LOG.md` for the full log (8 entries).
 | 2026-03-19 | Milestone 1 — CSV Foundation     | `csv.DictReader`, `pathlib`, file I/O, list[dict] |
 | 2026-03-20 | Milestone 1 — Aggregation logic  | Nested dicts, `setdefault`, accumulator pattern   |
 | 2026-03-23 | Milestone 1 — Complete           | `str.join()`, display function, ANSI formatting   |
+| 2026-03-24 | Milestone 2 — Complete           | `argparse`, subcommands, `add_transaction()`      |
+| 2026-03-26 | Milestones 3 & 4 (partial)       | `reports.py`, `models.py`, `Transaction` dataclass, filters wired |
