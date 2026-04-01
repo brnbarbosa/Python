@@ -241,3 +241,73 @@ summary = "\n".join(lines)  # one call on the whole list
 Call `.join()` once on the whole list — never inside a loop on a single item.
 
 ---
+
+## Mistake #9 — Calling `load_dotenv()` Inside a Function
+
+**Category:** Structure
+**First seen:** 2026-04-01
+**Last seen:** 2026-04-01
+**Occurrences:** 1
+
+**Description:**
+Bruno placed `load_dotenv()` inside `api_query()`, meaning it would be called every time the function runs. Initialization code that runs once at startup belongs at module level, not inside functions.
+
+**Example of the mistake:**
+```python
+def api_query(origin, destination, date):
+    load_dotenv()  # called every time api_query() is called
+    API_key = os.getenv("AVIATIONSTACK_KEY")
+```
+
+**Why it is wrong:**
+`load_dotenv()` is startup/initialization code. Putting it inside a function couples initialization to execution and wastes work on every call.
+
+**The correct pattern:**
+```python
+load_dotenv()  # module level — runs once when the module is imported
+
+def api_query(origin, destination, date):
+    API_key = os.getenv("AVIATIONSTACK_KEY")
+```
+
+**Rule to remember:**
+Initialization runs once at startup — put it at module level, never inside a function that gets called repeatedly.
+
+---
+
+## Mistake #10 — Mixing URL Query String With `params` Dict
+
+**Category:** Concepts
+**First seen:** 2026-04-01
+**Last seen:** 2026-04-01
+**Occurrences:** 1
+
+**Description:**
+Bruno embedded parameters directly in the URL f-string AND passed a `params` dict to `requests.get()` simultaneously. These are two different ways to pass query parameters — mixing them creates duplication and confusion.
+
+**Example of the mistake:**
+```python
+response = requests.get(
+    f"http://api.aviationstack.com/v1/flights?access_key={API_key}&limit=10",
+    params={"key": "value"},
+)
+```
+
+**Why it is wrong:**
+`requests` builds the query string from `params` automatically. Hardcoding params in the URL defeats the purpose and can cause duplicated or conflicting parameters.
+
+**The correct pattern:**
+```python
+response = requests.get(
+    "http://api.aviationstack.com/v1/flights",
+    params={
+        "access_key": API_key,
+        "limit": 10,
+    },
+)
+```
+
+**Rule to remember:**
+Use `params` dict for all query parameters — let `requests` build the URL. Never mix hardcoded URL params with a `params` dict.
+
+---
