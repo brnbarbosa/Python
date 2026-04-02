@@ -1,6 +1,6 @@
 # Bruno's Python Mistakes Log
 
-Last updated: 2026-03-31
+Last updated: 2026-04-02
 
 ---
 
@@ -309,5 +309,67 @@ response = requests.get(
 
 **Rule to remember:**
 Use `params` dict for all query parameters — let `requests` build the URL. Never mix hardcoded URL params with a `params` dict.
+
+---
+
+## Mistake #11 — Wrong Return Type Annotation
+
+**Category:** Style
+**First seen:** 2026-04-02
+**Last seen:** 2026-04-02
+**Occurrences:** 1
+
+**Description:**
+Bruno annotated `select_game()` as `-> str` but the function returns a `dict` from the results list. The return type annotation did not match the actual returned value.
+
+**Example of the mistake:**
+```python
+def select_game(results) -> str:
+    ...
+    return results[pick]  # this is a dict, not a str
+```
+
+**Why it is wrong:**
+Type annotations are a contract. A wrong annotation misleads anyone reading the code (including tools like mypy) about what the function actually returns.
+
+**The correct pattern:**
+```python
+def select_game(results) -> dict:
+    ...
+    return results[pick]
+```
+
+**Rule to remember:**
+Before writing `-> type`, ask: what does the last `return` statement actually produce?
+
+---
+
+## Mistake #12 — Off-by-One in Boundary Check
+
+**Category:** Logic
+**First seen:** 2026-04-02
+**Last seen:** 2026-04-02
+**Occurrences:** 1
+
+**Description:**
+Bruno wrote `pick > len(results)` to guard against out-of-bounds index selection. This allows `pick == len(results)` to pass, which is one beyond the last valid index.
+
+**Example of the mistake:**
+```python
+if pick < 0 or pick > len(results):
+    raise ValueError(...)
+```
+
+**Why it is wrong:**
+For a list of length 3, valid indexes are 0, 1, 2. `len(results)` is 3 — which is not a valid index. The check must reject it.
+
+**The correct pattern:**
+```python
+if pick < 0 or pick >= len(results):
+    raise ValueError(...)
+```
+
+**Rule to remember:**
+Valid indexes run from `0` to `len(x) - 1`. Use `>= len(x)` to reject everything beyond the last item.
 
 ---

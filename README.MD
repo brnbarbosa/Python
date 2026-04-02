@@ -2,24 +2,23 @@
 
 ## Status
 
-**Last session:** 2026-04-01
+**Last session:** 2026-04-02
 **Current project:** Track 2 — Steam Deal Monitor
-**Current milestone:** Milestone 1 — HTTP Basics & First API Call (in progress)
+**Current milestone:** Milestone 2 — User Input & Game Selection (in progress)
 
 ---
 
-## Last Session Summary (2026-04-01)
+## Last Session Summary (2026-04-02)
 
-- Started Track 2 — pivoted from Flight Price Monitor to Steam Deal Monitor (better fit for Bruno's interests)
-- Learned HTTP fundamentals: GET vs POST, status codes, JSON responses, how `requests` works
-- Learned API key security: `.env` files, `python-dotenv`, `os.getenv()`, never hardcoding secrets
-- Built initial `api_client.py` with `requests.get()` and `params` dict — made a real API call to Aviationstack
-- Discovered Aviationstack free tier limitations; evaluated alternatives; chose Steam Deal Monitor
-- Set up `flight_monitor/` project structure (to be renamed)
+- Completed Milestone 1: rewrote `api_client.py` for CheapShark API, made a working game price query by title
+- Understood response structure: list of dicts, each with `external`, `cheapest`, `gameID`, `steamAppID`
+- Created `display.py` with `get_game_name()` and `select_game()` — user can search and pick a game by number
+- Implemented input validation with `while True` / `try/except` and correct `>= len(results)` boundary check
+- Wired everything together in `main.py` — app runs end to end but display of selected game data still missing
 
 ## Next Session
 
-Revisit project goals clearly, rename/restructure project folder for Steam Deal Monitor, pick the right API (IsThereAnyDeal or Steam), and complete Milestone 1 with a working game price query.
+Complete Milestone 2 by adding a `display_game()` function in `display.py` that prints the selected game's useful fields cleanly to the terminal.
 
 
 
@@ -29,6 +28,8 @@ Revisit project goals clearly, rename/restructure project folder for Steam Deal 
 
 **Mistake #3 — Unnecessary Type Conversion (Path to str)** (2 occurrences)
 `open()` speaks `Path` natively — never convert unless an old library forces you to.
+
+
 
 ## Mistakes Log
 
@@ -50,3 +51,4 @@ See `MISTAKES_LOG.md` for the full log (10 entries).
 | 2026-03-27 | Milestone 4 — Complete           | `try/except`, `sys.exit()`, `enumerate()`, error handling design  |
 | 2026-03-31 | Milestone 5 — Complete           | `pathlib.mkdir`, `schedule`, `logging`, module refactor to `data.py` |
 | 2026-04-01 | Track 2 — Milestone 1 (started)  | HTTP basics, `requests`, `.env` security, `pprint`, API key handling |
+| 2026-04-02 | Milestone 1 complete, Milestone 2 (partial) | CheapShark API, list[dict] response, `enumerate`, input validation, `while/try/except` |
