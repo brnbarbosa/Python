@@ -1,6 +1,6 @@
 # Bruno's Python Mistakes Log
 
-Last updated: 2026-04-02
+Last updated: 2026-04-06
 
 ---
 
@@ -371,5 +371,38 @@ if pick < 0 or pick >= len(results):
 
 **Rule to remember:**
 Valid indexes run from `0` to `len(x) - 1`. Use `>= len(x)` to reject everything beyond the last item.
+
+---
+
+## Mistake #13 — Catching an Exception That Cannot Occur
+
+**Category:** Structure
+**First seen:** 2026-04-06
+**Last seen:** 2026-04-06
+**Occurrences:** 1
+
+**Description:**
+Bruno wrapped `record()` in a `try/except FileNotFoundError` block, but `record()` calls `mkdir(exist_ok=True)` before opening the file — the directory is guaranteed to exist, so `FileNotFoundError` can never be raised.
+
+**Example of the mistake:**
+```python
+try:
+    record_path = record(selected_game)
+    print(f"File saved on {record_path}.")
+except FileNotFoundError:
+    print("File not found.")
+```
+
+**Why it is wrong:**
+Adding error handling for scenarios that cannot happen adds noise, misleads readers into thinking something dangerous is occurring, and violates the principle of handling only real failure modes.
+
+**The correct pattern:**
+```python
+record_path = record(selected_game)
+print(f"File saved on {record_path}.")
+```
+
+**Rule to remember:**
+Only catch exceptions that can actually be raised. Before adding a `try/except`, ask: under what real conditions does this exception fire?
 
 ---
