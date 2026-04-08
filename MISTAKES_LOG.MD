@@ -1,6 +1,6 @@
 # Bruno's Python Mistakes Log
 
-Last updated: 2026-04-06
+Last updated: 2026-04-08
 
 ---
 
@@ -371,6 +371,63 @@ if pick < 0 or pick >= len(results):
 
 **Rule to remember:**
 Valid indexes run from `0` to `len(x) - 1`. Use `>= len(x)` to reject everything beyond the last item.
+
+---
+
+## Mistake #14 — Inverted Boolean Comparison
+
+**Category:** Logic
+**First seen:** 2026-04-07
+**Last seen:** 2026-04-07
+**Occurrences:** 1
+
+**Description:**
+Bruno wrote `threshold_value <= float(current_price)` to check if the current price is at or below the threshold. This fires when the price is *above* the threshold — the opposite of the intended alert condition.
+
+**Example of the mistake:**
+```python
+return threshold_value <= float(current_price)  # True when price is HIGH — wrong
+```
+
+**Why it is wrong:**
+The alert should fire when the current price is a deal — meaning current price is less than or equal to the threshold. The comparison was written backwards.
+
+**The correct pattern:**
+```python
+return float(current_price) <= threshold_value  # True when price is LOW — correct
+```
+
+**Rule to remember:**
+Read comparisons out loud before committing. "current price is less than or equal to threshold" → `float(current_price) <= threshold_value`.
+
+---
+
+## Mistake #15 — Wrapping `pd.read_csv()` in `with open()`
+
+**Category:** Concepts
+**First seen:** 2026-04-08
+**Last seen:** 2026-04-08
+**Occurrences:** 1
+
+**Description:**
+Bruno opened the CSV file manually with `with open()` and passed the file object `f` to `pd.read_csv()`. pandas handles file opening internally — you pass the path directly.
+
+**Example of the mistake:**
+```python
+with open(data_file, mode="r", encoding="utf-8") as f:
+    data = pd.read_csv(f)
+```
+
+**Why it is wrong:**
+`pd.read_csv()` accepts a `Path` or string path and manages the file lifecycle itself. Wrapping it in `with open()` adds unnecessary boilerplate and implies pandas can't handle paths, which is false.
+
+**The correct pattern:**
+```python
+return pd.read_csv(data_file)
+```
+
+**Rule to remember:**
+pandas I/O functions (`read_csv`, `read_excel`, etc.) take paths directly — never open the file yourself first.
 
 ---
 
