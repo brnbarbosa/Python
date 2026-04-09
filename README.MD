@@ -2,23 +2,22 @@
 
 ## Status
 
-**Last session:** 2026-04-09
+**Last session:** 2026-04-09 (session 2)
 **Current project:** Track 3 — Factoring Portfolio Dashboard
-**Current milestone:** Milestones 2, 3, and 4 complete.
+**Current milestone:** Milestone 5 in progress — Overdue Risk Analysis.
 
 ---
 
-## Last Session Summary (2026-04-09)
+## Last Session Summary (2026-04-09 session 2)
 
-- Built `analysis.py` with three functions: `overdue_invoices()`, `total_per_assignor()`, `total_per_drawee()`, `total_per_status()` using pandas boolean indexing and `groupby().sum()`
-- Built `reports.py` with `report_totals()` — exports a labeled CSV using `pd.concat()` with `keys` and `to_csv()` with `index_label`
-- Built `charts.py` with a reusable `pie_chart()` function using matplotlib — produces PNG files saved to `reports/`
-- Wired everything in `main.py` using a dict-driven loop to generate all three charts without repetition
-- Full pipeline working: load → analyze → export CSV → export PNG charts
+- Converted `due_date` column to datetime in `loader.py` using `pd.to_datetime()` — type conversion now happens at load time, not in analysis functions
+- Built `days_overdue()` in `analysis.py` — filters overdue invoices, calculates days past due using `pd.Timestamp.today()` and `.dt.days`, returns focused DataFrame with 5 columns
+- Started `risk_report()` in `reports.py` — exports overdue risk DataFrame to CSV with `index=False`
+- Learned: `.dt` accessor for timedelta Series, double-bracket multi-column selection, `pd.Timestamp.today()`
 
 ## Next Session
 
-Start Milestone 5 or explore adding more advanced analysis (e.g. overdue amount per assignor, days overdue, average discount rate).
+Finish wiring `risk_report()` into `main.py` and verify the exported CSV, then decide whether to add a chart for overdue exposure per assignor.
 
 
 
@@ -31,7 +30,7 @@ Start Milestone 5 or explore adding more advanced analysis (e.g. overdue amount 
 
 **Mistakes Log**
 
-See `MISTAKES_LOG.md` for the full log (16 entries).
+See `MISTAKES_LOG.md` for the full log (19 entries).
 
 
 
@@ -57,3 +56,4 @@ See `MISTAKES_LOG.md` for the full log (16 entries).
 | 2026-04-07 | Milestones 3 & 4 complete | `price_history()`, `price_alert()`, `check_for_threshold()`, `threshold_update()`, read-modify-write JSON, `.exists()`, truthy/falsy, `bool` return pattern |
 | 2026-04-08 | Track 3 — Milestone 1 complete | `pandas`, `pd.read_csv()`, DataFrame, module-level path constants, `import pandas as pd` |
 | 2026-04-09 | Milestones 2, 3 & 4 complete | boolean indexing, `groupby().sum()`, `pd.concat(keys=)`, `pd.Series`, `matplotlib`, `plt.pie()`, `plt.savefig()` |
+| 2026-04-09 (2) | Milestone 5 (partial) | `pd.to_datetime()`, `pd.Timestamp.today()`, `.dt.days`, double-bracket column selection, `index=False` |

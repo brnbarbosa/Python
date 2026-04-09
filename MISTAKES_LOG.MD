@@ -1,6 +1,6 @@
 # Bruno's Python Mistakes Log
 
-Last updated: 2026-04-09
+Last updated: 2026-04-09 (session 2)
 
 ---
 
@@ -489,5 +489,89 @@ print(f"File saved on {record_path}.")
 
 **Rule to remember:**
 Only catch exceptions that can actually be raised. Before adding a `try/except`, ask: under what real conditions does this exception fire?
+
+---
+
+## Mistake #17 — Multi-Column DataFrame Selection With Single Brackets
+
+**Category:** Concepts
+**First seen:** 2026-04-09
+**Last seen:** 2026-04-09
+**Occurrences:** 1
+
+**Description:**
+Bruno tried `df["col1", "col2"]` to select multiple columns. This syntax is invalid — selecting multiple columns requires passing a **list** inside the indexing operator.
+
+**Example of the mistake:**
+```python
+df["assignor", "drawee", "due_date"]  # TypeError
+```
+
+**Why it is wrong:**
+`df["x"]` selects one column by name. To select multiple, you must pass a list: the outer `[]` is the indexing operator, the inner `[]` is the list.
+
+**The correct pattern:**
+```python
+df[["assignor", "drawee", "due_date"]]  # double brackets
+```
+
+**Rule to remember:**
+Single brackets → one column (Series). Double brackets → multiple columns (DataFrame).
+
+---
+
+## Mistake #18 — Using `.days` Instead of `.dt.days` on a Timedelta Series
+
+**Category:** Concepts
+**First seen:** 2026-04-09
+**Last seen:** 2026-04-09
+**Occurrences:** 1
+
+**Description:**
+Bruno called `.days` directly on a Series of timedeltas. `.days` is an attribute of a single `timedelta` object — on a Series you must go through the `.dt` accessor first, just like `.str` for string operations.
+
+**Example of the mistake:**
+```python
+(pd.Timestamp.today() - df["due_date"]).days  # AttributeError
+```
+
+**Why it is wrong:**
+A Series is not a single timedelta. `.dt` is the accessor that applies datetime/timedelta attributes element-wise across the whole Series.
+
+**The correct pattern:**
+```python
+(pd.Timestamp.today() - df["due_date"]).dt.days
+```
+
+**Rule to remember:**
+String methods on a Series → `.str.method()`. Datetime/timedelta methods on a Series → `.dt.attribute`. Never call them directly.
+
+---
+
+## Mistake #19 — Referencing a Method Without Calling It
+
+**Category:** Syntax
+**First seen:** 2026-04-09
+**Last seen:** 2026-04-09
+**Occurrences:** 1
+
+**Description:**
+Bruno wrote `pd.Timestamp.today` without parentheses, referencing the method object instead of calling it. The result is a bound method, not a Timestamp.
+
+**Example of the mistake:**
+```python
+(pd.Timestamp.today - df["due_date"]).dt.days  # subtracts a method object — TypeError
+```
+
+**Why it is wrong:**
+Without `()`, Python returns the function object itself. The subtraction fails because you cannot subtract a datetime from a function.
+
+**The correct pattern:**
+```python
+(pd.Timestamp.today() - df["due_date"]).dt.days
+```
+
+**Rule to remember:**
+If it's a function or method, it needs `()` to run. A name without `()` is just a reference, not an execution.
 
 ---
