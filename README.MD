@@ -2,24 +2,23 @@
 
 ## Status
 
-**Last session:** 2026-04-08
+**Last session:** 2026-04-09
 **Current project:** Track 3 — Factoring Portfolio Dashboard
-**Current milestone:** Milestone 1 complete — data loaded into pandas DataFrame.
+**Current milestone:** Milestones 2, 3, and 4 complete.
 
 ---
 
-## Last Session Summary (2026-04-08)
+## Last Session Summary (2026-04-09)
 
-- Pivoted to Track 3 — Factoring Portfolio Dashboard
-- Designed `portfolio.csv` with 7 columns: `invoice_number`, `assignor`, `drawee`, `due_date`, `amount`, `discount_rate`, `status`
-- Created project folder structure: `factoring/`, `data/`, `main.py`, `loader.py`, `analysis.py`, `reports.py`
-- Installed pandas into the project venv
-- Wrote `loader.py` with `load_portfolio(path) -> pd.DataFrame` using `pd.read_csv()` directly
-- Wrote `main.py` that loads and prints the full DataFrame — Milestone 1 confirmed working
+- Built `analysis.py` with three functions: `overdue_invoices()`, `total_per_assignor()`, `total_per_drawee()`, `total_per_status()` using pandas boolean indexing and `groupby().sum()`
+- Built `reports.py` with `report_totals()` — exports a labeled CSV using `pd.concat()` with `keys` and `to_csv()` with `index_label`
+- Built `charts.py` with a reusable `pie_chart()` function using matplotlib — produces PNG files saved to `reports/`
+- Wired everything in `main.py` using a dict-driven loop to generate all three charts without repetition
+- Full pipeline working: load → analyze → export CSV → export PNG charts
 
 ## Next Session
 
-Start Milestone 2 in `analysis.py`: filter overdue invoices, total amount per assignor, total exposure per drawee.
+Start Milestone 5 or explore adding more advanced analysis (e.g. overdue amount per assignor, days overdue, average discount rate).
 
 
 
@@ -32,7 +31,7 @@ Start Milestone 2 in `analysis.py`: filter overdue invoices, total amount per as
 
 **Mistakes Log**
 
-See `MISTAKES_LOG.md` for the full log (15 entries).
+See `MISTAKES_LOG.md` for the full log (16 entries).
 
 
 
@@ -57,3 +56,4 @@ See `MISTAKES_LOG.md` for the full log (15 entries).
 | 2026-04-06 | Milestone 2 complete | `display_game()`, `.jsonl` append storage, `datetime.isoformat()`, `json.dumps()`, filename sanitization |
 | 2026-04-07 | Milestones 3 & 4 complete | `price_history()`, `price_alert()`, `check_for_threshold()`, `threshold_update()`, read-modify-write JSON, `.exists()`, truthy/falsy, `bool` return pattern |
 | 2026-04-08 | Track 3 — Milestone 1 complete | `pandas`, `pd.read_csv()`, DataFrame, module-level path constants, `import pandas as pd` |
+| 2026-04-09 | Milestones 2, 3 & 4 complete | boolean indexing, `groupby().sum()`, `pd.concat(keys=)`, `pd.Series`, `matplotlib`, `plt.pie()`, `plt.savefig()` |

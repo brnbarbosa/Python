@@ -1,6 +1,6 @@
 # Bruno's Python Mistakes Log
 
-Last updated: 2026-04-08
+Last updated: 2026-04-09
 
 ---
 
@@ -428,6 +428,34 @@ return pd.read_csv(data_file)
 
 **Rule to remember:**
 pandas I/O functions (`read_csv`, `read_excel`, etc.) take paths directly — never open the file yourself first.
+
+---
+
+## Mistake #16 — Calling String Methods Directly on a pandas Series
+
+**Category:** Concepts
+**First seen:** 2026-04-09
+**Last seen:** 2026-04-09
+**Occurrences:** 1
+
+**Description:**
+Bruno called `.strip().lower()` directly on a `pd.Series` object. String methods like `.strip()` and `.lower()` are Python string methods — they don't exist on a Series. pandas exposes them through the `.str` accessor.
+
+**Example of the mistake:**
+```python
+df["status"].strip().lower() == "overdue"  # AttributeError: Series has no .strip()
+```
+
+**Why it is wrong:**
+A Series is not a string. You can't call string methods on it directly — you must go through `.str` to apply string operations element-wise.
+
+**The correct pattern:**
+```python
+df["status"].str.strip().str.lower() == "overdue"
+```
+
+**Rule to remember:**
+To apply string methods to a Series, always go through `.str` first — `series.str.method()`, not `series.method()`.
 
 ---
 
