@@ -2,22 +2,23 @@
 
 ## Status
 
-**Last session:** 2026-04-09 (session 2)
-**Current project:** Track 3 — Factoring Portfolio Dashboard
-**Current milestone:** Milestone 5 in progress — Overdue Risk Analysis.
+**Last session:** 2026-04-10
+**Current project:** Track 3 — Factoring Portfolio Dashboard — COMPLETE
+**Current milestone:** Milestone 5 complete — Overdue Risk Analysis.
 
 ---
 
-## Last Session Summary (2026-04-09 session 2)
+## Last Session Summary (2026-04-10)
 
-- Converted `due_date` column to datetime in `loader.py` using `pd.to_datetime()` — type conversion now happens at load time, not in analysis functions
-- Built `days_overdue()` in `analysis.py` — filters overdue invoices, calculates days past due using `pd.Timestamp.today()` and `.dt.days`, returns focused DataFrame with 5 columns
-- Started `risk_report()` in `reports.py` — exports overdue risk DataFrame to CSV with `index=False`
-- Learned: `.dt` accessor for timedelta Series, double-bracket multi-column selection, `pd.Timestamp.today()`
+- Wired `risk_report()` into `main.py` — imported the function and added `OVERDUE_REPORT` path constant
+- Caught and fixed a directory ordering bug: `risk_report()` was called before `REPORTS.mkdir()`, which would crash if the directory didn't exist
+- Ran `main.py` cleanly with no errors or warnings
+- Verified `reports/days_overdue.csv` contains correct overdue data (assignor, drawee, due_date, amount, overdue_days)
+- Track 3 — Factoring Portfolio Dashboard is complete
 
 ## Next Session
 
-Finish wiring `risk_report()` into `main.py` and verify the exported CSV, then decide whether to add a chart for overdue exposure per assignor.
+Start a new project track — discuss options with Bruno (Track 4 pygame game, or a new direction).
 
 
 
@@ -30,7 +31,7 @@ Finish wiring `risk_report()` into `main.py` and verify the exported CSV, then d
 
 **Mistakes Log**
 
-See `MISTAKES_LOG.md` for the full log (19 entries).
+See `MISTAKES_LOG.md` for the full log (20 entries).
 
 
 
@@ -57,3 +58,4 @@ See `MISTAKES_LOG.md` for the full log (19 entries).
 | 2026-04-08 | Track 3 — Milestone 1 complete | `pandas`, `pd.read_csv()`, DataFrame, module-level path constants, `import pandas as pd` |
 | 2026-04-09 | Milestones 2, 3 & 4 complete | boolean indexing, `groupby().sum()`, `pd.concat(keys=)`, `pd.Series`, `matplotlib`, `plt.pie()`, `plt.savefig()` |
 | 2026-04-09 (2) | Milestone 5 (partial) | `pd.to_datetime()`, `pd.Timestamp.today()`, `.dt.days`, double-bracket column selection, `index=False` |
+| 2026-04-10 | Milestone 5 complete — Track 3 complete | `mkdir` ordering, wiring report functions, pipeline verification |

@@ -1,6 +1,6 @@
 # Bruno's Python Mistakes Log
 
-Last updated: 2026-04-09 (session 2)
+Last updated: 2026-04-10
 
 ---
 
@@ -545,6 +545,42 @@ A Series is not a single timedelta. `.dt` is the accessor that applies datetime/
 
 **Rule to remember:**
 String methods on a Series → `.str.method()`. Datetime/timedelta methods on a Series → `.dt.attribute`. Never call them directly.
+
+---
+
+## Mistake #20 — Writing to a File Before Ensuring the Directory Exists
+
+**Category:** Logic
+**First seen:** 2026-04-10
+**Last seen:** 2026-04-10
+**Occurrences:** 1
+
+**Description:**
+Bruno called `risk_report()` (which writes a file) before calling `REPORTS.mkdir()`, meaning if the `reports/` directory did not exist, the write would crash with `FileNotFoundError`.
+
+**Example of the mistake:**
+```python
+def main():
+    df = load_portfolio(DATA_FILE)
+    overdue_df = analysis.days_overdue(df)
+    risk_report(overdue_df, OVERDUE_REPORT)  # writes to REPORTS/ ...
+    ...
+    REPORTS.mkdir(parents=True, exist_ok=True)  # ... but directory created after
+```
+
+**Why it is wrong:**
+File I/O always requires the parent directory to exist first. Calling `mkdir` after a write is too late — the write fails before `mkdir` ever runs.
+
+**The correct pattern:**
+```python
+def main():
+    REPORTS.mkdir(parents=True, exist_ok=True)  # guarantee directory first
+    ...
+    risk_report(overdue_df, OVERDUE_REPORT)     # then write safely
+```
+
+**Rule to remember:**
+Always `mkdir` before any file write. Directory creation is setup — it belongs at the top, before any I/O.
 
 ---
 
