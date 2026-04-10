@@ -1,6 +1,6 @@
 # Bruno's Python Mistakes Log
 
-Last updated: 2026-04-10
+Last updated: 2026-04-10 (session 2)
 
 ---
 
@@ -588,8 +588,8 @@ Always `mkdir` before any file write. Directory creation is setup — it belongs
 
 **Category:** Syntax
 **First seen:** 2026-04-09
-**Last seen:** 2026-04-09
-**Occurrences:** 1
+**Last seen:** 2026-04-10
+**Occurrences:** 2
 
 **Description:**
 Bruno wrote `pd.Timestamp.today` without parentheses, referencing the method object instead of calling it. The result is a bound method, not a Timestamp.

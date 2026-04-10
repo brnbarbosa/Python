@@ -3,22 +3,35 @@
 ## Status
 
 **Last session:** 2026-04-10
-**Current project:** Track 3 — Factoring Portfolio Dashboard — COMPLETE
-**Current milestone:** Milestone 5 complete — Overdue Risk Analysis.
+**Current project:** Track 4 — Infinite Runner Game (pygame)
+**Current milestone:** Milestone 1 (partial) — window, game loop, player rect on screen
 
 ---
 
+## Track 4 — Infinite Runner Game
+
+**Concept:** A 2D side-scrolling infinite runner. The player jumps over obstacles that approach from the right. The game speeds up over time. Game over on collision.
+
+**Milestones:**
+- Milestone 1 — Window, game loop, player rectangle on screen
+- Milestone 2 — Gravity and jump mechanic
+- Milestone 3 — Obstacles spawning and scrolling
+- Milestone 4 — Collision detection and game over screen
+- Milestone 5 — Score, speed scaling, restart
+
 ## Last Session Summary (2026-04-10)
 
-- Wired `risk_report()` into `main.py` — imported the function and added `OVERDUE_REPORT` path constant
-- Caught and fixed a directory ordering bug: `risk_report()` was called before `REPORTS.mkdir()`, which would crash if the directory didn't exist
-- Ran `main.py` cleanly with no errors or warnings
-- Verified `reports/days_overdue.csv` contains correct overdue data (assignor, drawee, due_date, amount, overdue_days)
-- Track 3 — Factoring Portfolio Dashboard is complete
+- Chose Track 4: infinite runner game with jump-over-obstacles mechanic
+- Set up `pythonic_runner/` project structure (`main.py`, `scripts/`, `assets/`)
+- Learned the three-step game loop order: input → update → draw
+- Initialized pygame, created window with `set_mode()`, set caption, created player `Rect`
+- Implemented event loop with `pygame.QUIT` to close cleanly
+- Added double-buffer rendering: `window.fill()` + `pygame.draw.rect()` + `pygame.display.flip()`
+- Capped frame rate with `pygame.time.Clock()` and `clock.tick(60)`
 
 ## Next Session
 
-Start a new project track — discuss options with Bruno (Track 4 pygame game, or a new direction).
+Continue Milestone 1 to completion: verify player renders on screen, then move to Milestone 2 — gravity and jump mechanic.
 
 
 
@@ -26,8 +39,7 @@ Start a new project track — discuss options with Bruno (Track 4 pygame game, o
 
 ## Top Recurring Mistake
 
-**Mistake #3 — Unnecessary Type Conversion (Path to str)** (2 occurrences)
-`open()` speaks `Path` natively — never convert unless an old library forces you to.
+**Mistake #3 — Unnecessary Type Conversion (Path to str)** (2 occurrences) / **Mistake #19 — Referencing a Method Without Calling It** (2 occurrences)
 
 **Mistakes Log**
 
@@ -59,3 +71,4 @@ See `MISTAKES_LOG.md` for the full log (20 entries).
 | 2026-04-09 | Milestones 2, 3 & 4 complete | boolean indexing, `groupby().sum()`, `pd.concat(keys=)`, `pd.Series`, `matplotlib`, `plt.pie()`, `plt.savefig()` |
 | 2026-04-09 (2) | Milestone 5 (partial) | `pd.to_datetime()`, `pd.Timestamp.today()`, `.dt.days`, double-bracket column selection, `index=False` |
 | 2026-04-10 | Milestone 5 complete — Track 3 complete | `mkdir` ordering, wiring report functions, pipeline verification |
+| 2026-04-10 (2) | Track 4 — Milestone 1 (partial) | `pygame.init()`, `set_mode()`, `pygame.Rect`, game loop, `pygame.QUIT`, double-buffer rendering, `Clock.tick()` |
