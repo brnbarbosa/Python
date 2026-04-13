@@ -1,6 +1,6 @@
 # Bruno's Python Mistakes Log
 
-Last updated: 2026-04-10 (session 2)
+Last updated: 2026-04-13
 
 ---
 
@@ -609,5 +609,33 @@ Without `()`, Python returns the function object itself. The subtraction fails b
 
 **Rule to remember:**
 If it's a function or method, it needs `()` to run. A name without `()` is just a reference, not an execution.
+
+---
+
+## Mistake #21 — Wrong Case on pygame Constants
+
+**Category:** Syntax
+**First seen:** 2026-04-13
+**Last seen:** 2026-04-13
+**Occurrences:** 1
+
+**Description:**
+Bruno wrote `pygame.k_space` (lowercase k) instead of `pygame.K_SPACE`. pygame key constants use uppercase K followed by uppercase name.
+
+**Example of the mistake:**
+```python
+if event.key == pygame.k_space:  # AttributeError — constant doesn't exist
+```
+
+**Why it is wrong:**
+pygame key constants follow the pattern `pygame.K_NAME` — all uppercase. Lowercase `k` does not exist and raises an `AttributeError`.
+
+**The correct pattern:**
+```python
+if event.key == pygame.K_SPACE:
+```
+
+**Rule to remember:**
+pygame key constants are always `pygame.K_` followed by the key name in uppercase — never lowercase.
 
 ---

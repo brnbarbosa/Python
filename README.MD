@@ -2,9 +2,9 @@
 
 ## Status
 
-**Last session:** 2026-04-10
+**Last session:** 2026-04-13
 **Current project:** Track 4 — Infinite Runner Game (pygame)
-**Current milestone:** Milestone 1 (partial) — window, game loop, player rect on screen
+**Current milestone:** Milestone 2 complete — gravity, floor clamping, jump mechanic
 
 ---
 
@@ -19,19 +19,17 @@
 - Milestone 4 — Collision detection and game over screen
 - Milestone 5 — Score, speed scaling, restart
 
-## Last Session Summary (2026-04-10)
+## Last Session Summary (2026-04-13)
 
-- Chose Track 4: infinite runner game with jump-over-obstacles mechanic
-- Set up `pythonic_runner/` project structure (`main.py`, `scripts/`, `assets/`)
-- Learned the three-step game loop order: input → update → draw
-- Initialized pygame, created window with `set_mode()`, set caption, created player `Rect`
-- Implemented event loop with `pygame.QUIT` to close cleanly
-- Added double-buffer rendering: `window.fill()` + `pygame.draw.rect()` + `pygame.display.flip()`
-- Capped frame rate with `pygame.time.Clock()` and `clock.tick(60)`
+- Understood gravity as velocity accumulation per frame, not direct position change
+- Implemented `GRAVITY` and `player_vertical_velocity` at module level with correct initial values
+- Built floor detection using `player.bottom >= HEIGHT` and clamped position with `player.bottom = HEIGHT`
+- Debugged jump not working: traced the bug where the `else` block reset velocity immediately after jump — fixed with `elif player_vertical_velocity >= 0`
+- Implemented jump on `pygame.KEYDOWN` / `pygame.K_SPACE` with floor guard; tuned `GRAVITY` and `JUMP_FORCE` for fluid feel
 
 ## Next Session
 
-Continue Milestone 1 to completion: verify player renders on screen, then move to Milestone 2 — gravity and jump mechanic.
+Start Milestone 3 — obstacles spawning from the right and scrolling left across the screen.
 
 
 
@@ -43,7 +41,7 @@ Continue Milestone 1 to completion: verify player renders on screen, then move t
 
 **Mistakes Log**
 
-See `MISTAKES_LOG.md` for the full log (20 entries).
+See `MISTAKES_LOG.md` for the full log (21 entries).
 
 
 
@@ -72,3 +70,4 @@ See `MISTAKES_LOG.md` for the full log (20 entries).
 | 2026-04-09 (2) | Milestone 5 (partial) | `pd.to_datetime()`, `pd.Timestamp.today()`, `.dt.days`, double-bracket column selection, `index=False` |
 | 2026-04-10 | Milestone 5 complete — Track 3 complete | `mkdir` ordering, wiring report functions, pipeline verification |
 | 2026-04-10 (2) | Track 4 — Milestone 1 (partial) | `pygame.init()`, `set_mode()`, `pygame.Rect`, game loop, `pygame.QUIT`, double-buffer rendering, `Clock.tick()` |
+| 2026-04-13 | Milestone 2 complete | gravity via velocity accumulation, floor clamping, `pygame.KEYDOWN`, `pygame.K_SPACE`, jump guard with `elif player_vertical_velocity >= 0` |
