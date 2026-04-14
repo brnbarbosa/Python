@@ -2,9 +2,9 @@
 
 ## Status
 
-**Last session:** 2026-04-13
+**Last session:** 2026-04-14
 **Current project:** Track 4 — Infinite Runner Game (pygame)
-**Current milestone:** Milestone 2 complete — gravity, floor clamping, jump mechanic
+**Current milestone:** Milestones 3 & 4 complete — obstacles, collision, game over screen
 
 ---
 
@@ -19,17 +19,17 @@
 - Milestone 4 — Collision detection and game over screen
 - Milestone 5 — Score, speed scaling, restart
 
-## Last Session Summary (2026-04-13)
+## Last Session Summary (2026-04-14)
 
-- Understood gravity as velocity accumulation per frame, not direct position change
-- Implemented `GRAVITY` and `player_vertical_velocity` at module level with correct initial values
-- Built floor detection using `player.bottom >= HEIGHT` and clamped position with `player.bottom = HEIGHT`
-- Debugged jump not working: traced the bug where the `else` block reset velocity immediately after jump — fixed with `elif player_vertical_velocity >= 0`
-- Implemented jump on `pygame.KEYDOWN` / `pygame.K_SPACE` with floor guard; tuned `GRAVITY` and `JUMP_FORCE` for fluid feel
+- Built obstacle spawning using `pygame.time.set_timer()` and a custom `USEREVENT` — obstacles spawn as `pygame.Rect` objects appended to a list
+- Implemented obstacle scrolling with `obstacle.x -= OBSTACLE_SPEED` and removal using `obstacles[:]` copy iteration with `obstacles.remove()`
+- Added collision detection with `player.colliderect(obstacle)` — clean one-liner
+- Built a two-state game state machine (`"playing"` / `"game_over"`) to gate logic and rendering
+- Rendered "Game Over" text with `pygame.font.SysFont()`, `font.render()`, and `window.blit()` — learned that blit must happen after `fill()` but before `flip()`
 
 ## Next Session
 
-Start Milestone 3 — obstacles spawning from the right and scrolling left across the screen.
+Start Milestone 5 — score display (per-frame increment), speed scaling over time, and restart on keypress.
 
 
 
@@ -71,3 +71,4 @@ See `MISTAKES_LOG.md` for the full log (21 entries).
 | 2026-04-10 | Milestone 5 complete — Track 3 complete | `mkdir` ordering, wiring report functions, pipeline verification |
 | 2026-04-10 (2) | Track 4 — Milestone 1 (partial) | `pygame.init()`, `set_mode()`, `pygame.Rect`, game loop, `pygame.QUIT`, double-buffer rendering, `Clock.tick()` |
 | 2026-04-13 | Milestone 2 complete | gravity via velocity accumulation, floor clamping, `pygame.KEYDOWN`, `pygame.K_SPACE`, jump guard with `elif player_vertical_velocity >= 0` |
+| 2026-04-14 | Milestones 3 & 4 complete | `pygame.time.set_timer()`, `USEREVENT`, `colliderect()`, game state machine, `pygame.font`, `blit()`, draw order |
