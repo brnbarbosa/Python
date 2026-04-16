@@ -2,9 +2,9 @@
 
 ## Status
 
-**Last session:** 2026-04-14
+**Last session:** 2026-04-16
 **Current project:** Track 4 — Infinite Runner Game (pygame)
-**Current milestone:** Milestones 3 & 4 complete — obstacles, collision, game over screen
+**Current milestone:** Track 4 complete — Milestone 5 done, full OOP refactor complete
 
 ---
 
@@ -19,17 +19,17 @@
 - Milestone 4 — Collision detection and game over screen
 - Milestone 5 — Score, speed scaling, restart
 
-## Last Session Summary (2026-04-14)
+## Last Session Summary (2026-04-16)
 
-- Built obstacle spawning using `pygame.time.set_timer()` and a custom `USEREVENT` — obstacles spawn as `pygame.Rect` objects appended to a list
-- Implemented obstacle scrolling with `obstacle.x -= OBSTACLE_SPEED` and removal using `obstacles[:]` copy iteration with `obstacles.remove()`
-- Added collision detection with `player.colliderect(obstacle)` — clean one-liner
-- Built a two-state game state machine (`"playing"` / `"game_over"`) to gate logic and rendering
-- Rendered "Game Over" text with `pygame.font.SysFont()`, `font.render()`, and `window.blit()` — learned that blit must happen after `fill()` but before `flip()`
+- Completed Milestone 5: per-frame score with `font.render()` every frame, speed scaling via `BASE_SPEED + score // 300`, restart on R key
+- Understood the font/render/blit mental model: create the printer once, print a new sheet every frame
+- Built `Player` class with `__init__`, `jump()`, `update()`, `draw()`, `reset()` — first real Python class
+- Built `ObstacleManager` class with full ownership of spawn, movement, removal, and draw logic
+- Refactored `main.py` into a clean orchestration loop — learned why OOP solves the "where does this go?" confusion
 
 ## Next Session
 
-Start Milestone 5 — score display (per-frame increment), speed scaling over time, and restart on keypress.
+Track 4 is complete. Begin Track 5 or revisit any track Bruno wants to extend.
 
 
 
@@ -37,7 +37,7 @@ Start Milestone 5 — score display (per-frame increment), speed scaling over ti
 
 ## Top Recurring Mistake
 
-**Mistake #3 — Unnecessary Type Conversion (Path to str)** (2 occurrences) / **Mistake #19 — Referencing a Method Without Calling It** (2 occurrences)
+**Mistake #19 — Referencing a Method Without Calling It** (3 occurrences)
 
 **Mistakes Log**
 
@@ -72,3 +72,4 @@ See `MISTAKES_LOG.md` for the full log (21 entries).
 | 2026-04-10 (2) | Track 4 — Milestone 1 (partial) | `pygame.init()`, `set_mode()`, `pygame.Rect`, game loop, `pygame.QUIT`, double-buffer rendering, `Clock.tick()` |
 | 2026-04-13 | Milestone 2 complete | gravity via velocity accumulation, floor clamping, `pygame.KEYDOWN`, `pygame.K_SPACE`, jump guard with `elif player_vertical_velocity >= 0` |
 | 2026-04-14 | Milestones 3 & 4 complete | `pygame.time.set_timer()`, `USEREVENT`, `colliderect()`, game state machine, `pygame.font`, `blit()`, draw order |
+| 2026-04-16 | Milestone 5 complete + OOP refactor — Track 4 complete | `class`, `__init__`, `self`, `Player`, `ObstacleManager`, encapsulation, `reset()`, score scaling |

@@ -1,6 +1,6 @@
 # Bruno's Python Mistakes Log
 
-Last updated: 2026-04-13
+Last updated: 2026-04-16
 
 ---
 
@@ -588,15 +588,16 @@ Always `mkdir` before any file write. Directory creation is setup — it belongs
 
 **Category:** Syntax
 **First seen:** 2026-04-09
-**Last seen:** 2026-04-10
-**Occurrences:** 2
+**Last seen:** 2026-04-16
+**Occurrences:** 3
 
 **Description:**
-Bruno wrote `pd.Timestamp.today` without parentheses, referencing the method object instead of calling it. The result is a bound method, not a Timestamp.
+Bruno referenced a callable without calling it — first `pd.Timestamp.today` (missing `()`), then `ObstacleManager` when instantiating a class (missing `()`). In both cases the result is the object/class itself, not the result of calling it.
 
 **Example of the mistake:**
 ```python
 (pd.Timestamp.today - df["due_date"]).dt.days  # subtracts a method object — TypeError
+manager = ObstacleManager  # assigns the class, not an instance
 ```
 
 **Why it is wrong:**
