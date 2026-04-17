@@ -2,9 +2,9 @@
 
 ## Status
 
-**Last session:** 2026-04-16
-**Current project:** Track 4 — Infinite Runner Game (pygame)
-**Current milestone:** Track 4 complete — Milestone 5 done, full OOP refactor complete
+**Last session:** 2026-04-17
+**Current project:** Phase 2 — FactoringOS (Flask + SQLite)
+**Current milestone:** Project kickoff — database schema designed, SQLite tables created, Flask server running
 
 ---
 
@@ -19,17 +19,17 @@
 - Milestone 4 — Collision detection and game over screen
 - Milestone 5 — Score, speed scaling, restart
 
-## Last Session Summary (2026-04-16)
+## Last Session Summary (2026-04-17)
 
-- Completed Milestone 5: per-frame score with `font.render()` every frame, speed scaling via `BASE_SPEED + score // 300`, restart on R key
-- Understood the font/render/blit mental model: create the printer once, print a new sheet every frame
-- Built `Player` class with `__init__`, `jump()`, `update()`, `draw()`, `reset()` — first real Python class
-- Built `ObstacleManager` class with full ownership of spawn, movement, removal, and draw logic
-- Refactored `main.py` into a clean orchestration loop — learned why OOP solves the "where does this go?" confusion
+- Designed the full FactoringOS database schema: `transactions`, `invoices`, `advances` — driven by real business domain knowledge
+- Learned SQLite basics: `sqlite3.connect()`, `cursor.execute()`, `commit()`, `close()`
+- Built `init_db()` in `database.py` — creates all three tables with correct types, constraints, and foreign key
+- Understood the discount calculation: `amount × (discount_rate / 30) × days` — stored at creation, frozen on due date extension
+- Created `app.py` with Flask — first working web server, first `@app.route()` decorator, `debug=True` for development
 
 ## Next Session
 
-Track 4 is complete. Begin Track 5 or revisit any track Bruno wants to extend.
+Build the first real Flask route — create a transaction via a web form, insert into SQLite, and display it on a page.
 
 
 
@@ -73,3 +73,4 @@ See `MISTAKES_LOG.md` for the full log (21 entries).
 | 2026-04-13 | Milestone 2 complete | gravity via velocity accumulation, floor clamping, `pygame.KEYDOWN`, `pygame.K_SPACE`, jump guard with `elif player_vertical_velocity >= 0` |
 | 2026-04-14 | Milestones 3 & 4 complete | `pygame.time.set_timer()`, `USEREVENT`, `colliderect()`, game state machine, `pygame.font`, `blit()`, draw order |
 | 2026-04-16 | Milestone 5 complete + OOP refactor — Track 4 complete | `class`, `__init__`, `self`, `Player`, `ObstacleManager`, encapsulation, `reset()`, score scaling |
+| 2026-04-17 | Phase 2 kickoff — FactoringOS | database schema design, `sqlite3`, `CREATE TABLE`, foreign keys, `Flask`, `@app.route`, `app.run(debug=True)` |
