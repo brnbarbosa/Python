@@ -2,9 +2,9 @@
 
 ## Status
 
-**Last session:** 2026-04-17
+**Last session:** 2026-04-22
 **Current project:** Phase 2 — FactoringOS (Flask + SQLite)
-**Current milestone:** Project kickoff — database schema designed, SQLite tables created, Flask server running
+**Current milestone:** Blueprint registered, GET route rendering new_transaction.html form — POST logic next
 
 ---
 
@@ -19,17 +19,16 @@
 - Milestone 4 — Collision detection and game over screen
 - Milestone 5 — Score, speed scaling, restart
 
-## Last Session Summary (2026-04-17)
+## Last Session Summary (2026-04-22)
 
-- Designed the full FactoringOS database schema: `transactions`, `invoices`, `advances` — driven by real business domain knowledge
-- Learned SQLite basics: `sqlite3.connect()`, `cursor.execute()`, `commit()`, `close()`
-- Built `init_db()` in `database.py` — creates all three tables with correct types, constraints, and foreign key
-- Understood the discount calculation: `amount × (discount_rate / 30) × days` — stored at creation, frozen on due date extension
-- Created `app.py` with Flask — first working web server, first `@app.route()` decorator, `debug=True` for development
+- Built first Flask Blueprint in `routes/transactions.py` — learned how to split routes across files
+- Registered blueprint in `app.py` with `app.register_blueprint()`
+- Built GET route rendering `new_transaction.html` form with all six transaction fields
+- Understood Jinja2 `{{ variable }}` syntax for rendering Python data in HTML templates
 
 ## Next Session
 
-Build the first real Flask route — create a transaction via a web form, insert into SQLite, and display it on a page.
+Build the POST side of `new_transaction` — read `request.form` data, insert into SQLite `transactions` table, redirect on success.
 
 
 
@@ -74,3 +73,4 @@ See `MISTAKES_LOG.md` for the full log (21 entries).
 | 2026-04-14 | Milestones 3 & 4 complete | `pygame.time.set_timer()`, `USEREVENT`, `colliderect()`, game state machine, `pygame.font`, `blit()`, draw order |
 | 2026-04-16 | Milestone 5 complete + OOP refactor — Track 4 complete | `class`, `__init__`, `self`, `Player`, `ObstacleManager`, encapsulation, `reset()`, score scaling |
 | 2026-04-17 | Phase 2 kickoff — FactoringOS | database schema design, `sqlite3`, `CREATE TABLE`, foreign keys, `Flask`, `@app.route`, `app.run(debug=True)` |
+| 2026-04-22 | First Blueprint and GET route | `Blueprint`, `register_blueprint()`, `request.method`, `render_template()`, Jinja2 `{{ }}` |
