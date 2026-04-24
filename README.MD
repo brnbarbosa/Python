@@ -2,9 +2,9 @@
 
 ## Status
 
-**Last session:** 2026-04-22
+**Last session:** 2026-04-24
 **Current project:** Phase 2 — FactoringOS (Flask + SQLite)
-**Current milestone:** Blueprint registered, GET route rendering new_transaction.html form — POST logic next
+**Current milestone:** Invoice insertion complete — installment generator working, table displaying invoices
 
 ---
 
@@ -19,16 +19,18 @@
 - Milestone 4 — Collision detection and game over screen
 - Milestone 5 — Score, speed scaling, restart
 
-## Last Session Summary (2026-04-22)
+## Last Session Summary (2026-04-24)
 
-- Built first Flask Blueprint in `routes/transactions.py` — learned how to split routes across files
-- Registered blueprint in `app.py` with `app.register_blueprint()`
-- Built GET route rendering `new_transaction.html` form with all six transaction fields
-- Understood Jinja2 `{{ variable }}` syntax for rendering Python data in HTML templates
+- Built `base.html` with Jinja2 template inheritance (`{% extends %}`, `{% block content %}`) and Portuguese navigation
+- Built `invoices.html` with transaction summary, invoice form, and Jinja2 `{% for %}` loop rendering table rows
+- Built `generate_installments()` in `utils.py` — installment generator with weekend adjustment and discount calculation
+- Built `insert_invoices()` in `database.py` — batch insert with connection outside the loop
+- Wired full POST flow: form → `generate_installments()` → `insert_invoices()` → redirect → display
+- Added `brl` custom Jinja2 filter for Brazilian currency formatting
 
 ## Next Session
 
-Build the POST side of `new_transaction` — read `request.form` data, insert into SQLite `transactions` table, redirect on success.
+Build invoice deletion and the transaction list/dashboard page.
 
 
 
@@ -40,7 +42,7 @@ Build the POST side of `new_transaction` — read `request.form` data, insert in
 
 **Mistakes Log**
 
-See `MISTAKES_LOG.md` for the full log (21 entries).
+See `MISTAKES_LOG.md` for the full log (22 entries).
 
 
 
@@ -74,3 +76,4 @@ See `MISTAKES_LOG.md` for the full log (21 entries).
 | 2026-04-16 | Milestone 5 complete + OOP refactor — Track 4 complete | `class`, `__init__`, `self`, `Player`, `ObstacleManager`, encapsulation, `reset()`, score scaling |
 | 2026-04-17 | Phase 2 kickoff — FactoringOS | database schema design, `sqlite3`, `CREATE TABLE`, foreign keys, `Flask`, `@app.route`, `app.run(debug=True)` |
 | 2026-04-22 | First Blueprint and GET route | `Blueprint`, `register_blueprint()`, `request.method`, `render_template()`, Jinja2 `{{ }}` |
+| 2026-04-24 | Invoice insertion complete | `{% extends %}`, `{% block %}`, `{% for %}`, `generate_installments()`, `timedelta`, weekend adjustment, `brl` filter, `request.form.get()` |

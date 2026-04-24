@@ -1,6 +1,6 @@
 # Bruno's Python Mistakes Log
 
-Last updated: 2026-04-16
+Last updated: 2026-04-24
 
 ---
 
@@ -640,3 +640,29 @@ if event.key == pygame.K_SPACE:
 pygame key constants are always `pygame.K_` followed by the key name in uppercase — never lowercase.
 
 ---
+
+## Mistake #22 — Typo in Dict Key String
+
+**Category:** Syntax
+**First seen:** 2026-04-24
+**Last seen:** 2026-04-24
+**Occurrences:** 1
+
+**Description:**
+Bruno wrote `installment["invoice_numer"]` instead of `installment["invoice_number"]`. A typo in a dict key string raises a `KeyError` at runtime — Python cannot catch it at write time.
+
+**Example of the mistake:**
+```python
+installment["invoice_numer"]  # KeyError at runtime
+```
+
+**Why it is wrong:**
+Dict key lookups are exact string matches. A single missing character causes a `KeyError` that only appears when the code runs, not when it's written.
+
+**The correct pattern:**
+```python
+installment["invoice_number"]
+```
+
+**Rule to remember:**
+When accessing dict keys by string, double-check spelling — typos are silent until runtime.
