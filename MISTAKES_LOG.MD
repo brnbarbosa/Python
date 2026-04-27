@@ -666,3 +666,61 @@ installment["invoice_number"]
 
 **Rule to remember:**
 When accessing dict keys by string, double-check spelling — typos are silent until runtime.
+
+---
+
+## Mistake #23 — Using Built-in `id` Instead of Local Parameter
+
+**Category:** Syntax
+**First seen:** 2026-04-27
+**Last seen:** 2026-04-27
+**Occurrences:** 1
+
+**Description:**
+Bruno named the parameter `invoice_id` but wrote `(id,)` in the SQL tuple. `id` is a Python built-in function — passing it silently sends the wrong value with no immediate error.
+
+**Example of the mistake:**
+```python
+def del_invoice(invoice_id: int) -> None:
+    cursor.execute("DELETE FROM invoices WHERE id=?", (id,))  # built-in, not the parameter
+```
+
+**Why it is wrong:**
+`id` refers to Python's built-in `id()` function, not the local parameter. The SQL executes with the wrong value and no exception is raised.
+
+**The correct pattern:**
+```python
+def del_invoice(invoice_id: int) -> None:
+    cursor.execute("DELETE FROM invoices WHERE id=?", (invoice_id,))
+```
+
+**Rule to remember:**
+When building a SQL tuple, use the exact parameter name — never rely on a name that looks right but shadows a built-in.
+
+---
+
+## Mistake #24 — Allowing GET on a Destructive Route
+
+**Category:** Structure
+**First seen:** 2026-04-27
+**Last seen:** 2026-04-27
+**Occurrences:** 1
+
+**Description:**
+Bruno set `methods=["GET", "POST"]` on a delete route. Destructive operations must only accept POST — a GET route can be triggered by bots, browser prefetch, or an accidental link click, deleting data silently.
+
+**Example of the mistake:**
+```python
+@transactions_bp.route("/transactions/<int:transaction_id>/invoices/<int:invoice_id>/delete", methods=["GET", "POST"])
+```
+
+**Why it is wrong:**
+GET requests must be safe and idempotent — they should never modify or delete data. Any route that changes state must be POST-only.
+
+**The correct pattern:**
+```python
+@transactions_bp.route("/...delete", methods=["POST"])
+```
+
+**Rule to remember:**
+If the route changes or deletes data, `methods=["POST"]` only — never GET.

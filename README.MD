@@ -2,9 +2,9 @@
 
 ## Status
 
-**Last session:** 2026-04-24
+**Last session:** 2026-04-27
 **Current project:** Phase 2 — FactoringOS (Flask + SQLite)
-**Current milestone:** Invoice insertion complete — installment generator working, table displaying invoices
+**Current milestone:** Invoice deletion complete
 
 ---
 
@@ -19,18 +19,17 @@
 - Milestone 4 — Collision detection and game over screen
 - Milestone 5 — Score, speed scaling, restart
 
-## Last Session Summary (2026-04-24)
+## Last Session Summary (2026-04-27)
 
-- Built `base.html` with Jinja2 template inheritance (`{% extends %}`, `{% block content %}`) and Portuguese navigation
-- Built `invoices.html` with transaction summary, invoice form, and Jinja2 `{% for %}` loop rendering table rows
-- Built `generate_installments()` in `utils.py` — installment generator with weekend adjustment and discount calculation
-- Built `insert_invoices()` in `database.py` — batch insert with connection outside the loop
-- Wired full POST flow: form → `generate_installments()` → `insert_invoices()` → redirect → display
-- Added `brl` custom Jinja2 filter for Brazilian currency formatting
+- Built `del_invoice()` in `database.py` using SQL `DELETE FROM invoices WHERE id=?`
+- Built delete route `/transactions/<int:transaction_id>/invoices/<int:invoice_id>/delete` with `methods=["POST"]` only
+- Added per-row delete form inside `<td>` in `invoices.html` — form inside table cell, not outside the table
+- Learned REST HTTP method conventions (DELETE, PUT, PATCH) and why HTML forms only support GET and POST
+- Identified future improvement: `status` column on `transactions` table (draft/active) for operation confirmation flow
 
 ## Next Session
 
-Build invoice deletion and the transaction list/dashboard page.
+Add `status` column to `transactions` table (draft/active) before building any other features.
 
 
 
@@ -42,7 +41,7 @@ Build invoice deletion and the transaction list/dashboard page.
 
 **Mistakes Log**
 
-See `MISTAKES_LOG.md` for the full log (22 entries).
+See `MISTAKES_LOG.md` for the full log (24 entries).
 
 
 
@@ -77,3 +76,4 @@ See `MISTAKES_LOG.md` for the full log (22 entries).
 | 2026-04-17 | Phase 2 kickoff — FactoringOS | database schema design, `sqlite3`, `CREATE TABLE`, foreign keys, `Flask`, `@app.route`, `app.run(debug=True)` |
 | 2026-04-22 | First Blueprint and GET route | `Blueprint`, `register_blueprint()`, `request.method`, `render_template()`, Jinja2 `{{ }}` |
 | 2026-04-24 | Invoice insertion complete | `{% extends %}`, `{% block %}`, `{% for %}`, `generate_installments()`, `timedelta`, weekend adjustment, `brl` filter, `request.form.get()` |
+| 2026-04-27 | Invoice deletion complete | `DELETE FROM`, POST-only routes, REST HTTP methods, HTML form method limitation, per-row form in `<td>` |
