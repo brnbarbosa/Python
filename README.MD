@@ -2,9 +2,9 @@
 
 ## Status
 
-**Last session:** 2026-04-27
+**Last session:** 2026-04-28
 **Current project:** Phase 2 — FactoringOS (Flask + SQLite)
-**Current milestone:** Invoice deletion complete
+**Current milestone:** Transaction status (draft/active) complete
 
 ---
 
@@ -19,17 +19,17 @@
 - Milestone 4 — Collision detection and game over screen
 - Milestone 5 — Score, speed scaling, restart
 
-## Last Session Summary (2026-04-27)
+## Last Session Summary (2026-04-28)
 
-- Built `del_invoice()` in `database.py` using SQL `DELETE FROM invoices WHERE id=?`
-- Built delete route `/transactions/<int:transaction_id>/invoices/<int:invoice_id>/delete` with `methods=["POST"]` only
-- Added per-row delete form inside `<td>` in `invoices.html` — form inside table cell, not outside the table
-- Learned REST HTTP method conventions (DELETE, PUT, PATCH) and why HTML forms only support GET and POST
-- Identified future improvement: `status` column on `transactions` table (draft/active) for operation confirmation flow
+- Added `status TEXT DEFAULT 'active'` to `transactions` via `ALTER TABLE` with `try/except OperationalError` guard
+- Updated `insert_transaction()` to hardcode `"draft"` as initial status on every new transaction
+- Built `confirm_transaction()` in `database.py` using SQL `UPDATE transactions SET status = 'active' WHERE id = ?`
+- Built `/transactions/<id>/confirm` POST-only route and wired "Finalizar" button in `invoices.html`
+- Learned that HTML forms cannot be nested — fixed nested form issue that blocked the Finalizar button
 
 ## Next Session
 
-Add `status` column to `transactions` table (draft/active) before building any other features.
+Build the transaction list/dashboard page showing all transactions with their status.
 
 
 
@@ -41,7 +41,7 @@ Add `status` column to `transactions` table (draft/active) before building any o
 
 **Mistakes Log**
 
-See `MISTAKES_LOG.md` for the full log (24 entries).
+See `MISTAKES_LOG.md` for the full log (26 entries).
 
 
 
@@ -77,3 +77,4 @@ See `MISTAKES_LOG.md` for the full log (24 entries).
 | 2026-04-22 | First Blueprint and GET route | `Blueprint`, `register_blueprint()`, `request.method`, `render_template()`, Jinja2 `{{ }}` |
 | 2026-04-24 | Invoice insertion complete | `{% extends %}`, `{% block %}`, `{% for %}`, `generate_installments()`, `timedelta`, weekend adjustment, `brl` filter, `request.form.get()` |
 | 2026-04-27 | Invoice deletion complete | `DELETE FROM`, POST-only routes, REST HTTP methods, HTML form method limitation, per-row form in `<td>` |
+| 2026-04-28 | Transaction status complete | `ALTER TABLE ADD COLUMN`, `UPDATE SET`, `try/except OperationalError`, Jinja2 `{% if %}` syntax, nested HTML forms |

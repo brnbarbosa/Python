@@ -724,3 +724,68 @@ GET requests must be safe and idempotent — they should never modify or delete 
 
 **Rule to remember:**
 If the route changes or deletes data, `methods=["POST"]` only — never GET.
+
+---
+
+## Mistake #25 — Mixing `{{ }}` Inside a `{% if %}` Block
+
+**Category:** Syntax
+**First seen:** 2026-04-28
+**Last seen:** 2026-04-28
+**Occurrences:** 1
+
+**Description:**
+Bruno wrote `{% if {{ transaction[7] }} == "draft" %}` — mixing output syntax inside a logic block. Jinja2 uses two distinct delimiters that must never be nested.
+
+**Example of the mistake:**
+```html
+{% if {{ transaction[7] }} == "draft" %}
+```
+
+**Why it is wrong:**
+`{{ }}` is the output delimiter — it renders a value. `{% %}` is the logic delimiter — it evaluates expressions. Inside `{% if %}`, variables are written bare, without `{{ }}`.
+
+**The correct pattern:**
+```html
+{% if transaction[7] == "draft" %}
+```
+
+**Rule to remember:**
+Inside `{% %}` blocks, write variables bare — never wrap them in `{{ }}`.
+
+---
+
+## Mistake #26 — Nested HTML Forms
+
+**Category:** Structure
+**First seen:** 2026-04-28
+**Last seen:** 2026-04-28
+**Occurrences:** 1
+
+**Description:**
+Bruno placed the "Finalizar" form inside the invoice insertion form. HTML does not support nested forms — inner `<form>` tags are ignored and all buttons inherit the outer form's action and required fields.
+
+**Example of the mistake:**
+```html
+<form action="/invoices" method="POST">
+    ...required fields...
+    <form action="/confirm" method="POST">  <!-- ignored by browser -->
+        <button>Finalizar</button>
+    </form>
+</form>
+```
+
+**Why it is wrong:**
+The browser ignores the inner `<form>` tag entirely. The Finalizar button becomes part of the outer form — clicking it triggers the outer form's required field validation.
+
+**The correct pattern:**
+```html
+<form action="/invoices" method="POST">...required fields...</form>
+<!-- completely separate, after the closing tag -->
+<form action="/confirm" method="POST">
+    <button>Finalizar</button>
+</form>
+```
+
+**Rule to remember:**
+HTML forms cannot be nested. Every `<form>` must open and close independently — never place one inside another.
